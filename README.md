@@ -32,7 +32,7 @@ You agree not to use the Model or Derivatives of the Model:
 ```
 
 # Topics Covered:
-
+```
 - Open Ports: Identifying open ports is crucial as they can be entry points for attackers. Common ports to check include HTTP (80, 443), FTP (21), SSH (22), and SMB (445).
 - Outdated Software or Services: Systems running outdated software or services are often vulnerable to exploits. This includes web servers, database servers, and any third-party software.
 - Default Credentials: Many systems and services are installed with default usernames and passwords, which are well-known and can be easily exploited.
@@ -48,7 +48,7 @@ You agree not to use the Model or Derivatives of the Model:
 - API Vulnerabilities: In modern web applications, APIs are often used and can have vulnerabilities like insecure endpoints or data leakage.
 - Denial of Service (DoS) Vulnerabilities: Identifying services that are vulnerable to DoS attacks, which can make the resource unavailable to legitimate users.
 - Buffer Overflows: Common in older software, these vulnerabilities can allow an attacker to crash the system or execute arbitrary code.
-
+```
 
 # WhiteRabbitNeo
 
