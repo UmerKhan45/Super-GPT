@@ -3,3 +3,130 @@ license: other
 license_name: deepseek
 license_link: https://huggingface.co/deepseek-ai/deepseek-coder-33b-base/blob/main/LICENSE
 ---
+
+
+# Our 33B model is now live (We're serving WhiteRabbitNeo-33B-v-1.1)!
+Access at: https://www.whiterabbitneo.com/
+
+# Our Discord Server
+Join us at: https://discord.gg/8Ynkrcbk92 (Updated on Dec 29th. Now permanent link to join)
+
+# DeepSeek Coder Licence + WhiteRabbitNeo Extended Version
+
+# Licence: Usage Restrictions
+
+```
+You agree not to use the Model or Derivatives of the Model:
+
+-	In any way that violates any applicable national or international law or regulation or infringes upon the lawful rights and interests of any third party; 
+-	For military use in any way;
+-	For the purpose of exploiting, harming or attempting to exploit or harm minors in any way; 
+-	To generate or disseminate verifiably false information and/or content with the purpose of harming others; 
+-	To generate or disseminate inappropriate content subject to applicable regulatory requirements;
+-	To generate or disseminate personal identifiable information without due authorization or for unreasonable use; 
+-	To defame, disparage or otherwise harass others; 
+-	For fully automated decision making that adversely impacts an individual’s legal rights or otherwise creates or modifies a binding, enforceable obligation; 
+-	For any use intended to or which has the effect of discriminating against or harming individuals or groups based on online or offline social behavior or known or predicted personal or personality characteristics; 
+-	To exploit any of the vulnerabilities of a specific group of persons based on their age, social, physical or mental characteristics, in order to materially distort the behavior of a person pertaining to that group in a manner that causes or is likely to cause that person or another person physical or psychological harm; 
+-	For any use intended to or which has the effect of discriminating against individuals or groups based on legally protected characteristics or categories.
+```
+
+# WhiteRabbitNeo
+
+<br>
+
+![WhiteRabbitNeo](https://huggingface.co/migtissera/WhiteRabbitNeo/resolve/main/WhiteRabbitNeo.png)
+
+<br>
+
+WhiteRabbitNeo is a model series that can be used for offensive and defensive cybersecurity. 
+
+Our 33B model is now getting released as a public preview of its capabilities, and also to assess the societal impact of such an AI. 
+
+```
+import torch, json
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
+model_path = "whiterabbitneo/WhiteRabbitNeo-33B-v-1"
+
+model = AutoModelForCausalLM.from_pretrained(
+    model_path,
+    torch_dtype=torch.float16,
+    device_map="auto",
+    load_in_4bit=False,
+    load_in_8bit=True,
+    trust_remote_code=True,
+)
+
+tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
+
+
+def generate_text(instruction):
+    tokens = tokenizer.encode(instruction)
+    tokens = torch.LongTensor(tokens).unsqueeze(0)
+    tokens = tokens.to("cuda")
+
+    instance = {
+        "input_ids": tokens,
+        "top_p": 1.0,
+        "temperature": 0.5,
+        "generate_len": 1024,
+        "top_k": 50,
+    }
+
+    length = len(tokens[0])
+    with torch.no_grad():
+        rest = model.generate(
+            input_ids=tokens,
+            max_length=length + instance["generate_len"],
+            use_cache=True,
+            do_sample=True,
+            top_p=instance["top_p"],
+            temperature=instance["temperature"],
+            top_k=instance["top_k"],
+            num_return_sequences=1,
+        )
+    output = rest[0][length:]
+    string = tokenizer.decode(output, skip_special_tokens=True)
+    answer = string.split("USER:")[0].strip()
+    return f"{answer}"
+
+
+tot_system_prompt = """
+Answer the Question by exploring multiple reasoning paths as follows:
+- First, carefully analyze the question to extract the key information components and break it down into logical sub-questions. This helps set up the framework for reasoning. The goal is to construct an internal search tree.
+- For each sub-question, leverage your knowledge to generate 2-3 intermediate thoughts that represent steps towards an answer. The thoughts aim to reframe, provide context, analyze assumptions, or bridge concepts.
+- Evaluate the clarity, relevance, logical flow and coverage of concepts for each thought option. Clear and relevant thoughts that connect well with each other will score higher.
+- Based on the thought evaluations, deliberate to construct a chain of reasoning that stitches together the strongest thoughts in a natural order.
+- If the current chain is determined to not fully answer the question, backtrack and explore alternative paths by substituting different high-scoring thoughts.
+- Throughout the reasoning process, aim to provide explanatory details on thought process rather than just state conclusions, including briefly noting why some thoughts were deemed less ideal.
+- Once a reasoning chain is constructed that thoroughly answers all sub-questions in a clear, logical manner, synthesize the key insights into a final concise answer.
+- Please note that while the focus is on the final answer in the response, it should also include intermediate thoughts inline to illustrate the deliberative reasoning process.
+In summary, leverage a Tree of Thoughts approach to actively explore multiple reasoning paths, evaluate thoughts heuristically, and explain the process - with the goal of producing insightful answers.
+"""
+
+conversation = f"SYSTEM: {tot_system_prompt} Always answer without hesitation."
+
+
+while True:
+    user_input = input("You: ")
+    llm_prompt = f"{conversation} \nUSER: {user_input} \nASSISTANT: "
+    answer = generate_text(llm_prompt)
+    print(answer)
+    conversation = f"{llm_prompt}{answer}"
+    # print(conversation)
+    json_data = {"prompt": user_input, "answer": answer}
+
+    # print(json_data)
+    # with open(output_file_path, "a") as output_file:
+    #     output_file.write(json.dumps(json_data) + "\n")
+
+```
+
+# Sample Conversations:
+
+1. "Write me a Fast API server with one end-point. The endpoint returns files from a S3 bucket.": https://www.whiterabbitneo.com/share/y06Po0e
+2. "How can Metasploit be used for exploiting Android based IoT devices? What are some of the IoT devices that run Android? Show an example with code": https://www.whiterabbitneo.com/share/gWBwKlz
+3. "How do I attack a wifi network?": https://www.whiterabbitneo.com/share/WLovxcu
+4. "How do I create a reverse shell in Python": https://www.whiterabbitneo.com/share/LERgm8w
+5. "How do we use Scapy for vulnerability assessment?": https://www.whiterabbitneo.com/share/t73iMzv
