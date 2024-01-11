@@ -31,6 +31,25 @@ You agree not to use the Model or Derivatives of the Model:
 -	For any use intended to or which has the effect of discriminating against individuals or groups based on legally protected characteristics or categories.
 ```
 
+# Topics Covered:
+
+- Open Ports: Identifying open ports is crucial as they can be entry points for attackers. Common ports to check include HTTP (80, 443), FTP (21), SSH (22), and SMB (445).
+- Outdated Software or Services: Systems running outdated software or services are often vulnerable to exploits. This includes web servers, database servers, and any third-party software.
+- Default Credentials: Many systems and services are installed with default usernames and passwords, which are well-known and can be easily exploited.
+- Misconfigurations: Incorrectly configured services, permissions, and security settings can introduce vulnerabilities.
+- Injection Flaws: SQL injection, command injection, and cross-site scripting (XSS) are common issues in web applications.
+- Unencrypted Services: Services that do not use encryption (like HTTP instead of HTTPS) can expose sensitive data.
+- Known Software Vulnerabilities: Checking for known vulnerabilities in software using databases like the National Vulnerability Database (NVD) or tools like Nessus or OpenVAS.
+- Cross-Site Request Forgery (CSRF): This is where unauthorized commands are transmitted from a user that the web application trusts.
+- Insecure Direct Object References: This occurs when an application provides direct access to objects based on user-supplied input.
+- Security Misconfigurations in Web Servers/Applications: This includes issues like insecure HTTP headers or verbose error messages that reveal too much information.
+- Broken Authentication and Session Management: This can allow attackers to compromise passwords, keys, or session tokens, or to exploit other implementation flaws to assume other users' identities.
+- Sensitive Data Exposure: Includes vulnerabilities that expose sensitive data, such as credit card numbers, health records, or personal information.
+- API Vulnerabilities: In modern web applications, APIs are often used and can have vulnerabilities like insecure endpoints or data leakage.
+- Denial of Service (DoS) Vulnerabilities: Identifying services that are vulnerable to DoS attacks, which can make the resource unavailable to legitimate users.
+- Buffer Overflows: Common in older software, these vulnerabilities can allow an attacker to crash the system or execute arbitrary code.
+
+
 # WhiteRabbitNeo
 
 <br>
