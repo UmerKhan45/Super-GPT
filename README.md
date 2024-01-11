@@ -6,7 +6,7 @@ license_link: https://huggingface.co/deepseek-ai/deepseek-coder-33b-base/blob/ma
 
 
 # Our 33B-v1.1 model is now live (We'll always be serving the newest model on our web app)!
-Access at: https://www.whiterabbitneo.com/
+33B-v1.1 model comes with a "Prompt Enhancement" feature. Access at: https://www.whiterabbitneo.com/
 
 # Our Discord Server
 Join us at: https://discord.gg/8Ynkrcbk92 (Updated on Dec 29th. Now permanent link to join)
